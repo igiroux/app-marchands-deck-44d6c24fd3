@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="App marchands et livreurs — deck de présentation (Sénégal, Dakar, Thiès, Ziguinchor, Kaolack, Saly et Mbour).">
+<title>App marchands &amp; livreurs — deck</title>
+<style>
+  :root {
+    --green: #0B6E4F; --green-2: #0E8A63; --green-ink: #063D2C; --green-soft: #E7F5EF;
+    --sand: #F5E6C8; --paper: #FBF6EE; --ink: #1C1915; --muted: #5E564C; --line: #E0D0B0;
+    --card: #FFFCF7; --amber: #A86B1E; --shadow: 0 16px 40px rgba(28, 25, 21, .12);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body {
+    font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: var(--ink);
+    background: radial-gradient(900px 280px at 0% -10%, #fff 0%, transparent 55%), var(--sand);
+    line-height: 1.45;
+  }
+  body.is-pres { overflow: hidden; }
+  button, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  button:focus-visible, select:focus-visible { outline: 3px solid var(--green-2); outline-offset: 2px; }
+  .wrap {
+    max-width: 1140px; margin: 0 auto; padding: 18px 16px 28px;
+    min-height: 100%; display: flex; flex-direction: column;
+  }
+  body.is-pres .wrap { height: 100%; min-height: 0; padding-bottom: 0; }
+  body.is-pres footer.note { display: none; }
+  header.top { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: flex-end; justify-content: space-between; margin-bottom: 16px; flex: none; }
+  .eyebrow { margin: 0 0 4px; letter-spacing: .08em; text-transform: uppercase; font-size: 11px; color: var(--green); font-weight: 700; }
+  h1 { margin: 0; font-size: clamp(1.35rem, 2.4vw, 1.85rem); line-height: 1.15; color: var(--green-ink); }
+  .position { margin: 6px 0 0; font-size: 1.02rem; }
+  .slide {
+    background: #fff; border: 1px solid var(--line); border-radius: 20px;
+    padding: clamp(16px, 3vw, 28px); box-shadow: var(--shadow);
+  }
+  body.is-pres .slide {
+    height: 100%; min-height: 0; max-height: 100%;
+    overflow: auto; overscroll-behavior: contain;
+  }
+  .slide h2 { margin: 0 0 6px; font-size: clamp(1.3rem, 2vw, 1.7rem); color: var(--green-ink); }
+  .kicker { margin: 0 0 14px; color: var(--muted); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .card { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+  .card h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .card.green { background: var(--green); color: #fff; border-color: var(--green); }
+  .card.green p, .card.green li { color: #F5E6C8; }
+  .card.green h3 { color: #fff; }
+  .card ul, .slide ul { margin: 8px 0 0; padding-left: 1.1rem; }
+  .card li + li { margin-top: 4px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; background: var(--sand); color: var(--green-ink); border-radius: 999px; padding: 3px 8px; margin-bottom: 6px; }
+  .card.green .tag { background: rgba(255,255,255,.18); color: #fff; }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; margin-top: 12px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; color: var(--green); }
+  pre.ascii { margin: 0; overflow: auto; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11.5px; line-height: 1.35; background: var(--ink); color: var(--sand); padding: 14px 16px; border-radius: 14px; }
+  .steps { display: flex; flex-direction: column; gap: 8px; margin: 8px 0 0; }
+  .step { display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: start; background: var(--paper); border-radius: 12px; padding: 10px 12px; border: 1px solid var(--line); }
+  .num { width: 36px; height: 36px; border-radius: 50%; background: var(--green); color: #fff; display: grid; place-items: center; font-weight: 800; }
+  .step b { display: block; }
+  .step span { color: var(--muted); font-size: .92rem; }
+  .linkish { margin-top: 14px; border: 0; background: var(--green); color: #fff; border-radius: 999px; padding: 10px 14px; font-weight: 700; }
+  .arch { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .chain { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; justify-content: center; }
+  .node { background: #fff; border: 2px solid var(--green); border-radius: 14px; padding: 10px 12px; min-width: 120px; text-align: center; font-weight: 800; }
+  .node small { display: block; font-weight: 600; color: var(--muted); margin-top: 4px; }
+  .node.flutter { background: var(--green); color: #fff; min-width: 180px; }
+  .node.flutter small { color: var(--sand); }
+  .node.user { border-style: dashed; background: var(--sand); }
+  .arr { align-self: center; font-weight: 800; color: var(--green); font-size: 1.2rem; }
+  .side-note { color: var(--muted); font-size: .92rem; text-align: center; max-width: 680px; }
+  .mods { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .mods span { background: var(--green-soft); color: var(--green-ink); border-radius: 999px; padding: 4px 8px; font-size: 12px; font-weight: 700; }
+  .cost { display: grid; grid-template-columns: 1.2fr .8fr; gap: 12px; }
+  .big { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 4px 0; color: var(--green); font-weight: 800; line-height: 1; }
+
+  .deck { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .deck[hidden] { display: none !important; }
+  body.is-pres .deck > .slide {
+    height: 100%; min-height: 0; max-height: 100%;
+    overflow: auto; overscroll-behavior: contain;
+  }
+  #view-pres {
+    flex: 1; min-height: 0; display: flex; flex-direction: column;
+    padding-bottom: 84px; /* réserve pour la barre fixe */
+  }
+  body.is-pres #view-pres .hint { display: none; }
+  .deck-nav {
+    position: fixed; left: 0; right: 0; bottom: 0; transform: none;
+    z-index: 40; width: 100%; max-width: none;
+    display: grid; grid-template-columns: minmax(16px, 1fr) 132px minmax(0, 900px) auto 132px minmax(16px, 1fr);
+    gap: 8px; align-items: center;
+    background: rgba(251, 246, 238, .98); border: 0; border-top: 1px solid var(--line);
+    border-radius: 0; padding: 10px 16px; box-shadow: 0 -8px 24px rgba(28, 25, 21, .08);
+    backdrop-filter: blur(8px);
+  }
+  .nav-btn {
+    border: 0; background: var(--green); color: #fff; border-radius: 12px;
+    padding: 10px 14px; font-weight: 700; width: 132px; min-width: 132px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .nav-btn:disabled { background: #C9C0B0; cursor: default; }
+  .dots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; grid-column: 4; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; border: 0; background: #D9CBB2; padding: 0; }
+  .dot.on { background: var(--green); transform: scale(1.25); }
+  #slide-status {
+    margin: 0; font-size: .85rem; color: var(--muted); text-align: center;
+    grid-column: 3; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  #btn-prev { grid-column: 2; }
+  #btn-next { grid-column: 5; justify-self: end; }
+  .hint { margin: 8px 0 0; font-size: .82rem; color: var(--muted); text-align: center; }
+  @media (max-width: 720px) {
+    .deck-nav {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto;
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    }
+    #slide-status { grid-column: 1 / -1; grid-row: 1; white-space: normal; }
+    .dots { grid-column: 1 / -1; grid-row: 2; }
+    #btn-prev { grid-column: 1; grid-row: 3; width: 100%; min-width: 0; }
+    #btn-next { grid-column: 2; grid-row: 3; width: 100%; min-width: 0; justify-self: stretch; }
+  
+  .deck { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .deck[hidden] { display: none !important; }
+  body.is-pres .deck > .slide {
+    height: 100%; min-height: 0; max-height: 100%;
+    overflow: auto; overscroll-behavior: contain;
+  }
+  #view-pres { padding-bottom: 132px; }
+  }
+  footer.note { margin-top: 18px; color: var(--muted); font-size: .86rem; border-top: 1px solid var(--line); padding-top: 10px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+  @media (max-width: 980px) {
+    .grid-3, .grid-2, .cost { grid-template-columns: 1fr; }
+  }
+
+  /* Mobile (deck Associé) : pas de débordement horizontal, hauteur réelle de l'écran */
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  html, body { overflow-x: hidden; max-width: 100%; }
+  @supports (height: 100dvh) { body.is-pres { height: 100dvh; } }
+  .slide, .card, td, th, p, li, h1, h2, h3 { overflow-wrap: anywhere; }
+  @media (max-width: 720px) {
+    .wrap { padding: 10px 10px 0; }
+    header.top { margin-bottom: 10px; gap: 4px; }
+    h1 { font-size: 1.15rem; }
+    .position { font-size: .88rem; margin-top: 4px; }
+    .eyebrow { font-size: 10px; }
+    .slide { border-radius: 16px; padding: 14px; }
+    .slide h2 { font-size: 1.2rem; }
+    table { font-size: .84rem; }
+    th, td { padding: 6px 6px; }
+    .step { grid-template-columns: 30px 1fr; gap: 8px; padding: 8px 10px; }
+    .num { width: 30px; height: 30px; }
+    .nav-btn { padding: 10px 8px; }
+  }
+  @media (max-width: 720px) and (max-height: 640px) {
+    header.top .position { display: none; }
+  }
+  header.deck-top { margin-bottom: 10px; }
+  header.deck-top h1 { font-size: clamp(1rem, 1.8vw, 1.25rem); }
+</style>
+</head>
+<body class="is-pres">
+<div class="wrap">
+
+  <header class="top deck-top">
+    <div>
+      <p class="eyebrow">Sénégal · Dakar, Thiès, Ziguinchor, Kaolack, Saly et Mbour</p>
+      <h1>App marchands &amp; livreurs — deck</h1>
+    </div>
+  </header>
+
+  <section id="view-pres" role="tabpanel" aria-label="Présentation">
+
+    <div id="deck-associe" class="deck" aria-label="Présentation produit">
+
+    <section class="slide" data-title="Résumé">
+      <h2>App marchands &amp; livreurs</h2>
+      <p class="kicker">Sénégal · Dakar, Thiès, Ziguinchor, Kaolack, Saly et Mbour · Octobre 2026 · Confidentiel</p>
+      <div class="grid-2">
+        <article class="card green">
+          <span class="tag">Promesse</span>
+          <h3>Un outil de journée</h3>
+          <p>Commande lisible, course reliée, paiement Wave ou Orange Money visible, tenue quand le réseau coupe.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Terrain</span>
+          <h3>Pilote urbain</h3>
+          <p>D’abord snacks et cuisine de rue, avec les livreurs à moto déjà sur le terrain. Puis vêtements et chaussures.</p>
+        </article>
+      </div>
+      <p style="margin-top:12px">Au Sénégal, le commerce de proximité se joue déjà au téléphone. Ce geste suffit pour quelques clients. Il se défait dès que la journée s’accélère. Ce n’est pas une place de marché de plus : c’est assez simple pour un téléphone modeste et une personne qui écrit peu, assez utile pour qu’on y revienne la semaine suivante.</p>
+    </section>
+
+    <section class="slide" data-title="Problème" hidden>
+      <h2>Le problème</h2>
+      <p class="kicker">Temps perdu, courses qui ne partent pas, activité trop dépendante de la mémoire et du réseau — alors que la demande est là.</p>
+      <div class="grid-3">
+        <article class="card">
+          <span class="tag">Marchand</span>
+          <h3>Vend dans la discussion</h3>
+          <ul>
+            <li>Photos, prix, « c’est payé » mélangés dans le même fil.</li>
+            <li>Pas d’état simple : acceptée, en préparation, partie, livrée.</li>
+            <li>Menu papier ou photos pénibles à tenir à jour.</li>
+            <li>Beaucoup écrivent peu : un long message n’est pas un outil.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="tag">Livreur</span>
+          <h3>Joint par un appel</h3>
+          <ul>
+            <li>Chaque course repart de zéro.</li>
+            <li>Réexpliquer l’adresse, rappeler si personne ne décroche.</li>
+            <li>Rien ne relie clairement la course à la commande.</li>
+            <li>Une course mal comprise abîme la relation.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="tag">Client</span>
+          <h3>Message, rappel, autre app</h3>
+          <ul>
+            <li>Discute, précise, paie ailleurs.</li>
+            <li>Ne voit pas simplement où en est sa commande.</li>
+            <li>Mauvais plat, mauvaise adresse, paiement incertain.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Marché" hidden>
+      <h2>Contexte de marché</h2>
+      <p class="kicker">La messagerie est devenue le comptoir du commerce de proximité. Le produit rend plus net un usage déjà installé — et le terrain est large.</p>
+      <div class="grid-2">
+        <article class="card">
+          <span class="tag">Les 4 régions du pilote</span>
+          <p class="big">~247&nbsp;500</p>
+          <p>commerces et entreprises avec local à Dakar, Thiès, Kaolack et Ziguinchor (Saly et Mbour font partie de la région de Thiès). Source : ANSD, recensement des entreprises 2016.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Dakar seul</span>
+          <p class="big">~83&nbsp;500</p>
+          <p>commerces avec local. Les vendeurs ambulants et la cuisine de rue sans local ne sont pas comptés : le vivier réel est plus large.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Paiement mobile</span>
+          <p class="big">24,1&nbsp;%</p>
+          <p>des transactions de monnaie électronique de l’UEMOA en 2024 se font au Sénégal : 1<sup>er</sup> pays de l’Union en volume (BCEAO). Wave et Orange Money font déjà partie du quotidien.</p>
+        </article>
+        <article class="card green">
+          <span class="tag">Notre ambition</span>
+          <p class="big" style="color:#fff">≥&nbsp;100&nbsp;000</p>
+          <p>marchands à terme. C’est une cible, pas un chiffre mesuré : elle suppose de toucher aussi les commerces sans local et plusieurs villes. Le pilote valide d’abord l’adoption sur quelques centaines de marchands.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Positionnement" hidden>
+      <h2>Positionnement</h2>
+      <p class="kicker">WhatsApp reste la coque sociale. L’app devient le système de la commande et de la livraison.</p>
+      <div class="grid-2">
+        <article class="card green">
+          <span class="tag">Ce que c’est</span>
+          <ul>
+            <li><b>WhatsApp garde la conversation.</b> On ne remplace pas l’échange avec les clients : on structure ce qui vient après — commande, paiement, course.</li>
+            <li><b>Un outil de journée, pas une vitrine.</b> La valeur se voit chaque jour : moins d’erreurs, moins d’appels, plus de commandes servies.</li>
+            <li><b>Hors-ligne d’abord.</b> Data chère, réseau irrégulier : les gestes importants sont gardés et se synchronisent au retour du réseau.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="tag">Ce que ce n’est pas</span>
+          <ul>
+            <li><b>Pas une place de marché nationale.</b> L’app reste dans le réseau du marchand : ses clients, ses livreurs.</li>
+            <li><b>Pas une flotte salariée.</b> Les livreurs restent indépendants ; l’app les relie aux marchands sans les employer.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Vision" hidden>
+      <h2>Vision et promesse</h2>
+      <p class="kicker">Chaque jour, le commerçant de snack ou de cuisine de rue doit pouvoir :</p>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><div><b>Mettre son offre en ligne vite</b><span>Une photo de la carte suffit — sans long travail d’écriture.</span></div></div>
+        <div class="step"><div class="num">2</div><div><b>Recevoir des commandes lisibles</b><span>Accepter ou refuser sans relire tout un échange.</span></div></div>
+        <div class="step"><div class="num">3</div><div><b>Faire partir une livraison</b><span>Avec un livreur indépendant déjà sur le terrain, sans cascade d’appels.</span></div></div>
+        <div class="step"><div class="num">4</div><div><b>Encaisser Wave et Orange Money</b><span>Et voir si c’est payé.</span></div></div>
+        <div class="step"><div class="num">5</div><div><b>Tenir quand le réseau coupe</b><span>Retrouver le fil quand il revient.</span></div></div>
+      </div>
+      <p class="kicker" style="margin-top:12px">Vêtements et chaussures viennent après. Le premier produit doit d’abord tenir sur une offre simple et répétée : le plat, la carte du snack.</p>
+    </section>
+
+    <section class="slide" data-title="Publics" hidden>
+      <h2>Publics cibles</h2>
+      <p class="kicker">Quatre personnes, un ordre clair.</p>
+      <div class="grid-2">
+        <article class="card green">
+          <span class="tag">En premier</span>
+          <h3>Marchand snack / cuisine de rue</h3>
+          <p>Dakar, Thiès, Ziguinchor, Kaolack, Saly ou Mbour. Téléphone modeste, data coûteuse, peu de lecture. Menu visible vite, commandes claires, livreur joignable sans enchaîner les appels.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Ensuite</span>
+          <h3>Marchand vêtements / chaussures</h3>
+          <p>Variantes : taille, couleur, état. Prix et précisions corrigeables, une fois commande et livraison solides sur le snack.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Terrain</span>
+          <h3>Livreur tchak-tchak</h3>
+          <p>Motocycliste indépendant. Courses proches, entrée légère par numéro de téléphone, savoir ce qu’il récupère, où il va, quand c’est livré.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Acheteur</span>
+          <h3>Client</h3>
+          <p>Commander sans long message, payer en Wave ou Orange Money, savoir si la course est bien partie.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Objectifs" hidden>
+      <h2>Objectifs produit</h2>
+      <p class="kicker">Ce que la première version rend possible.</p>
+      <div class="grid-2">
+        <article class="card"><span class="tag">1</span><h3>Offre en quelques minutes</h3><p>Une photo de la carte. Visible sans rédiger un catalogue.</p></article>
+        <article class="card"><span class="tag">2</span><h3>Commande structurée</h3><p>Le client choisit (ou envoie un vocal). États : acceptée, à récupérer, en route, livrée.</p></article>
+        <article class="card"><span class="tag">3</span><h3>Livraison reliée</h3><p>Course rattachée au marchand, au client et à la commande. Même état pour tous.</p></article>
+        <article class="card"><span class="tag">4</span><h3>Paiement mobile visible</h3><p>Wave ou Orange Money. Le marchand voit si c’est payé.</p></article>
+        <article class="card"><span class="tag">5</span><h3>Tenue hors réseau</h3><p>Gestes locaux qui se rattrapent au retour de la connexion.</p></article>
+        <article class="card"><span class="tag">6–7</span><h3>Compte léger · usage qui revient</h3><p>Le téléphone suffit. Succès = une commande ou une course dans la semaine.</p></article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Périmètre" hidden>
+      <h2>Périmètre de la première version</h2>
+      <p class="kicker">Deux portes en parallèle : snacks et cuisine de rue d’une part, autres commerces de proximité d’autre part. Le terrain décide où prioriser.</p>
+      <div class="grid-2">
+        <article class="card green">
+          <span class="tag">Ce que le produit fait</span>
+          <ul>
+            <li>Offre par photo (la carte entière pour un snack) — snacks et autres commerces du pilote.</li>
+            <li>Prise de commande guidée, peu d’écriture.</li>
+            <li>Suivi simple commande et course entre les trois rôles.</li>
+            <li>Encaissement Wave et Orange Money, statut visible.</li>
+            <li>Utilisable sans réseau, reprise au retour de connexion.</li>
+            <li>Pilote Dakar, Thiès, Ziguinchor, Kaolack, Saly et Mbour ; priorité tranchée selon où l’adoption est la plus nette.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="tag">Hors périmètre</span>
+          <ul>
+            <li><b>Flotte salariée.</b> Les livreurs restent indépendants. Pas d’équipe de coursiers gérée.</li>
+            <li><b>Place de marché nationale.</b> Ni tout le pays, ni toutes les catégories dès le premier jour.</li>
+            <li><b>Expansion avant validation.</b> Pas d’élargissement tant que le pilote n’a pas montré où prioriser.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Contraintes" hidden>
+      <h2>Contraintes produit</h2>
+      <p class="kicker">Elles viennent du terrain, pas d’un idéal de bureau.</p>
+      <table>
+        <thead><tr><th>Contrainte</th><th>Ce que le produit en fait</th></tr></thead>
+        <tbody>
+          <tr><td>Faible littératie</td><td>Image, voix, icônes et choix courts priment sur le texte long.</td></tr>
+          <tr><td>Data chère</td><td>Photos compressées. Un usage quotidien ne vide pas le forfait.</td></tr>
+          <tr><td>Téléphones modestes</td><td>Fluide sur des appareils d’entrée de gamme.</td></tr>
+          <tr><td>Wave et Orange Money</td><td>Paiement sur ce que les clients utilisent déjà.</td></tr>
+          <tr><td>Réseau irrégulier</td><td>Le travail continue, puis se remet en ordre au retour du réseau.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="slide" data-title="Économie" hidden>
+      <h2>Modèle économique — en deux temps</h2>
+      <p class="kicker">On vend un résultat, pas un prix : moins de commandes perdues, moins d’appels pour trouver un livreur, des paiements confirmés.</p>
+      <div class="grid-2">
+        <article class="card green">
+          <span class="tag">Temps 1 · Au lancement</span>
+          <h3>Abonnement seul</h3>
+          <p class="big" style="color:#fff">3&nbsp;000 F&nbsp;CFA</p>
+          <p>par mois pour le marchand (≈&nbsp;100&nbsp;F par jour), payé via Wave ; rien à payer pour le livreur. Le message : « un outil qui te fait gagner du temps et de l’argent ». Un montant fixe, simple à comprendre, connu à l’avance — assez pour qu’on le prenne au sérieux.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Temps 2 · Une fois la valeur démontrée</span>
+          <h3>Un partage</h3>
+          <p class="big" style="font-size:clamp(1.15rem,2.4vw,1.5rem);line-height:1.2">« On ne gagne que si toi tu gagnes »</p>
+          <p>Une part de ce que l’app apporte en ventes ou en courses revient au projet. On parle d’abord du résultat (« cette semaine, l’app t’a apporté X commandes et Y FCFA encaissés ») ; le pourcentage figure dans les conditions, en toute transparence.</p>
+        </article>
+      </div>
+      <div class="grid-2" style="margin-top:12px">
+        <article class="card">
+          <h3>Quand passer au temps 2</h3>
+          <p>Quand le marchand revient chaque semaine, que le paiement Wave ou Orange Money passe par l’app et qu’il voit son gain. Préavis clair, explication en face à face, aucune hausse rétroactive.</p>
+        </article>
+        <article class="card">
+          <h3>Rétention</h3>
+          <p>Le point décisif. Un commerçant qui paie deux mois puis s’arrête coûte plus cher à faire venir qu’il ne rapporte. Le produit doit valoir son abonnement chaque semaine.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Prix et projections" hidden>
+      <h2>Abonnement à 3&nbsp;000 F&nbsp;CFA — projections</h2>
+      <p class="kicker">~1&nbsp;000&nbsp;F était presque gratuit. 3&nbsp;000&nbsp;F absorbe les coûts d’infra liés au volume de transactions Wave (exemple de plafond : <b>50&nbsp;USD / mois pour 5&nbsp;000 utilisateurs</b>) et fait vivre l’équipe. Net ≈&nbsp;2&nbsp;970&nbsp;F (≈&nbsp;5,1&nbsp;USD) par payant après ~1&nbsp;% Wave · 1&nbsp;USD ≈ 584&nbsp;F · avant impôts.</p>
+      <table>
+        <thead><tr><th>Étape</th><th>Payants</th><th>Revenu / mois</th><th>Ce que ça finance</th></tr></thead>
+        <tbody>
+          <tr><td><b>1 · Coûts absorbés</b></td><td style="white-space:nowrap">≈&nbsp;100</td><td>0,3&nbsp;M&nbsp;F<br><small>≈&nbsp;510&nbsp;USD</small></td><td>100&nbsp;% infra + outils (≤&nbsp;500&nbsp;USD / mois)</td></tr>
+          <tr><td><b>2 · Rémunérations fondateurs</b></td><td style="white-space:nowrap">≈&nbsp;4&nbsp;000</td><td>12&nbsp;M&nbsp;F<br><small>≈&nbsp;20&nbsp;500&nbsp;USD</small></td><td>Coûts (~1&nbsp;000&nbsp;USD) + <b>rémunérations fondateurs ≈&nbsp;16&nbsp;400&nbsp;USD / mois</b> + réserve</td></tr>
+          <tr><td><b>Rémunération ingénieur</b></td><td style="white-space:nowrap">—</td><td>—</td><td>Futur recrutement, conditionné au grossissement de l’infrastructure et à un revenu suffisant déjà gagné.</td></tr>
+          <tr><td>10k</td><td style="white-space:nowrap">10&nbsp;000</td><td>30&nbsp;M&nbsp;F<br><small>≈&nbsp;51&nbsp;400&nbsp;USD</small></td><td>Équipe 3–4 + infra 400–1&nbsp;200&nbsp;USD, large marge</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px">À ~1&nbsp;000&nbsp;F, il fallait ≈&nbsp;12&nbsp;000 payants pour les mêmes rémunérations. Hors messages WhatsApp Cloud API (risque P&amp;L à plafonner).</p>
+    </section>
+
+    <section class="slide" data-title="Déploiement" hidden>
+      <h2>Déploiement par vagues</h2>
+      <p class="kicker">Pas de dates fixes : on passe à la vague suivante quand les indicateurs sont au rendez-vous. Principe : pas de ville sans relais local.</p>
+      <table>
+        <thead><tr><th>Vague</th><th>Où</th><th>Pour passer à la suite</th></tr></thead>
+        <tbody>
+          <tr><td><b>1 · Pilote</b></td><td>Ziguinchor et Dakar (1 à 2 quartiers)</td><td>Marchands actifs après 4 semaines ; l’app jugée plus simple que « WhatsApp + appel ».</td></tr>
+          <tr><td><b>2 · Extension</b></td><td>Thiès, et d’autres quartiers de Dakar</td><td>Rétention stable, coût d’installation maîtrisé, assez de livreurs par zone.</td></tr>
+          <tr><td><b>3 · Nouvelle région</b></td><td>Kaolack</td><td>Relais local confirmé et formé ; méthode d’installation rodée.</td></tr>
+          <tr><td><b>4 · Littoral</b></td><td>Mbour et Saly</td><td>Relais local en place ; offre adaptée à la saison touristique de Saly.</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px">Dans chaque zone, marchands et livreurs sont recrutés ensemble. Relais locaux identifiés pour les premières vagues, à pourvoir pour le littoral.</p>
+    </section>
+
+    <section class="slide" data-title="Indicateurs" hidden>
+      <h2>Indicateurs de succès du pilote</h2>
+      <p class="kicker">Indicateur central : commandes payées ou courses livrées par semaine parmi les marchands actifs. Les seuils se fixent ensuite.</p>
+      <table>
+        <thead><tr><th>Indicateur</th><th>Lecture</th></tr></thead>
+        <tbody>
+          <tr><td>Usage hebdomadaire</td><td>Au moins une commande ou une course dans la semaine, pas seulement un compte créé.</td></tr>
+          <tr><td>Commandes menées au bout</td><td>Claires, acceptées, paiement mobile abouti.</td></tr>
+          <tr><td>Livraisons complétées</td><td>Courses reliées à une commande et marquées livrées.</td></tr>
+          <tr><td>Rétention</td><td>Part des marchands encore actifs au 2<sup>e</sup> mois, puis au 3<sup>e</sup>.</td></tr>
+          <tr><td>Tenue réelle</td><td>Journées où le marchand a pu travailler malgré une connexion faible.</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px"><b>Ce que le pilote doit prouver d’abord :</b> le marchand s’installe vite et reçoit une première commande via l’app ; il la trouve plus simple que « chat WhatsApp + appel au livreur » ; il l’utilise encore après 4 à 8 semaines.</p>
+    </section>
+
+    <section class="slide" data-title="Risques" hidden>
+      <h2>Risques principaux</h2>
+      <div class="grid-3">
+        <article class="card green">
+          <span class="tag">Risque n°1</span>
+          <h3>Ne pas faire nettement mieux que WhatsApp + appel</h3>
+          <p>Si la commande n’est pas plus nette et la course moins stressante dès les premières utilisations, le marchand garde ses habitudes. Réponse : un pilote court, des indicateurs simples, et on améliore le gain immédiat avant d’élargir.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Économie</span>
+          <h3>Rétention</h3>
+          <p>À 3&nbsp;000&nbsp;F par mois, la valeur doit se voir chaque semaine. Si l’usage ne revient pas au-delà des 4 à 8 premières semaines, l’abonnement s’arrête.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Confiance</span>
+          <h3>Livreurs indépendants</h3>
+          <p>Course non honorée, retard, désaccord : le réseau tient si tout le monde voit le même état, course après course.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Volumes" hidden>
+      <h2>Volumes — horizon 50&nbsp;000 marchands</h2>
+      <p class="kicker">Hypothèse de dimensionnement (pas une mesure terrain) : 10 cmd/marchand/jour. Roadmap <b>1k → 10k → 30k → 50k</b>.</p>
+      <table>
+        <thead><tr><th>Paramètre</th><th>Valeur</th></tr></thead>
+        <tbody>
+          <tr><td>Marchands actifs</td><td><b>50&nbsp;000</b></td></tr>
+          <tr><td>Commandes / marchand / jour</td><td><b>10</b></td></tr>
+          <tr><td>Transactions / jour</td><td><b>500&nbsp;000</b></td></tr>
+          <tr><td>Transactions / mois (30&nbsp;j)</td><td><b>≈&nbsp;15&nbsp;000&nbsp;000</b></td></tr>
+          <tr><td>Pics (midi / soir)</td><td><b>×2 à ×3</b> vs moyenne</td></tr>
+        </tbody>
+      </table>
+            <table>
+        <thead><tr><th>Palier</th><th>Marchands</th><th>Txs / jour</th><th>Txs / mois</th></tr></thead>
+        <tbody>
+          <tr><td><b>1k</b></td><td>1&nbsp;000</td><td>10&nbsp;000</td><td>≈&nbsp;0,3&nbsp;M</td></tr>
+          <tr><td><b>10k</b></td><td>10&nbsp;000</td><td>100&nbsp;000</td><td>≈&nbsp;3&nbsp;M</td></tr>
+          <tr><td><b>30k</b></td><td>30&nbsp;000</td><td>300&nbsp;000</td><td>≈&nbsp;9&nbsp;M</td></tr>
+          <tr><td><b>50k</b></td><td>50&nbsp;000</td><td>500&nbsp;000</td><td>≈&nbsp;15&nbsp;M</td></tr>
+        </tbody>
+      </table>
+
+      <div class="grid-2" style="margin-top:12px">
+        <article class="card green">
+          <span class="tag">Sizing</span>
+          <h3>Base technique</h3>
+          <p>On dimensionne le backend sur <b>500k txs/jour</b>. Cohérent avec un outil de journée (snacks), plus dense qu’une marketplace e-commerce.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Comparaison</span>
+          <h3>10&nbsp;% Jumia (groupe 2024)</h3>
+          <p>≈&nbsp;<b>6&nbsp;200 txs/jour</b> — point de comparaison seulement (≈&nbsp;1,2&nbsp;% du sizing). Ne sert pas à provisionner.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Infra" hidden>
+      <h2>Infrastructure backend — ordres de grandeur</h2>
+      <table>
+        <thead><tr><th>Palier</th><th>Marchands</th><th>Txs / jour</th><th>Infra / mois</th></tr></thead>
+        <tbody>
+          <tr><td><b>1k</b></td><td>1&nbsp;000</td><td><b>10k</b> (~0,3&nbsp;M/mois)</td><td><b>80–250&nbsp;USD</b> · 1 machine</td></tr>
+          <tr><td><b>10k</b></td><td>10&nbsp;000</td><td><b>100k</b> (~3&nbsp;M/mois)</td><td><b>400–1&nbsp;200&nbsp;USD</b> · + redondance / monitoring</td></tr>
+          <tr><td><b>30k</b></td><td>30&nbsp;000</td><td><b>300k</b> (~9&nbsp;M/mois)</td><td><b>1&nbsp;800–3&nbsp;500&nbsp;USD</b></td></tr>
+          <tr><td><b>50k</b></td><td>50&nbsp;000</td><td><b>500k</b> (~15&nbsp;M/mois)</td><td><b>3&nbsp;500–5&nbsp;500&nbsp;USD</b></td></tr>
+        </tbody>
+      </table>
+      <p class="kicker" style="margin-top:10px">Roadmap <b>1k → 10k → 30k → 50k</b>. De 1k à 10k, l’infra reste gérable par le <b>fondateur seul</b> ; l’écart est surtout redondance et monitoring. 1&nbsp;USD ≈ 584&nbsp;FCFA (BCEAO, 2 oct.&nbsp;2026).</p>
+      <table style="margin-top:10px">
+        <thead><tr><th>À 50k (indicatif)</th><th>Ordre de grandeur · pourquoi ce coût</th></tr></thead>
+        <tbody>
+          <tr><td>Backend</td><td>≈&nbsp;5–8 + 4–6 instances — pour absorber ≈&nbsp;500&nbsp;000 txs/jour et les pics (×2 à ×3)</td></tr>
+          <tr><td>Stockage</td><td>Base principale + 1 à 2 réplicas, avec cache — redondance et tenue des pics</td></tr>
+          <tr><td>Fichiers et diffusion</td><td>Files de traitement, stockage de fichiers, diffusion — suivent le volume (≈&nbsp;15&nbsp;M txs / mois)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="slide" data-title="TCO" hidden>
+      <h2>Ingénierie et coût total (TCO)</h2>
+      <p class="kicker">Avec l’abo à 3&nbsp;000&nbsp;F : <b>Rémunérations fondateurs (≈&nbsp;16&nbsp;400&nbsp;USD / mois) financées dès ~4&nbsp;000 payants</b>. Rémunération ingénieur : futur recrutement, conditionné au grossissement de l’infrastructure et à un revenu suffisant déjà gagné. Puis 30k → 50k.</p>
+      <table>
+        <thead><tr><th>Palier</th><th>Équipe (ETP)</th><th>Masse / mois</th></tr></thead>
+        <tbody>
+          <tr><td>1k → ~4k</td><td><b>Équipe fondatrice</b></td><td>≈&nbsp;5,8&nbsp;M&nbsp;FCFA</td></tr>
+          <tr><td>~4k → ~10k</td><td><b>Équipe fondatrice + renforts</b></td><td>≈&nbsp;9,6&nbsp;M&nbsp;FCFA</td></tr>
+          <tr><td>~10k</td><td><b>3–4</b></td><td>≈&nbsp;10–12&nbsp;M&nbsp;FCFA</td></tr>
+          <tr><td>30k</td><td><b>4–6</b> + équipe fondatrice</td><td>≈&nbsp;5–6&nbsp;M&nbsp;FCFA + fondateurs</td></tr>
+          <tr><td>50k</td><td><b>8–12</b> + équipe fondatrice</td><td>≈&nbsp;11–12&nbsp;M&nbsp;FCFA + fondateurs</td></tr>
+        </tbody>
+      </table>
+      <div class="grid-2" style="margin-top:12px">
+        <article class="card green">
+          <span class="tag">12 mois</span>
+          <h3>TCO ramp-up lean</h3>
+          <p class="big" style="font-size:clamp(1.1rem,2.2vw,1.35rem)">≈&nbsp;70–110&nbsp;M&nbsp;FCFA</p>
+          <p>Haut ≈&nbsp;140–200&nbsp;M si embauche plus tôt. Cloud secondaire. Couvert par ≈&nbsp;2–3k payants en moyenne sur l’année à 3&nbsp;000&nbsp;F.</p>
+        </article>
+        <article class="card">
+          <span class="tag">24 mois</span>
+          <h3>Cumul médian</h3>
+          <p class="big" style="font-size:clamp(1.1rem,2.2vw,1.35rem)">≈&nbsp;250–320&nbsp;M&nbsp;FCFA</p>
+          <p>Haut ≈&nbsp;350–480&nbsp;M. WhatsApp API = risque P&amp;L à part.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Suite" hidden>
+      <h2>En résumé</h2>
+      <p class="kicker">Un usage déjà installé, rendu plus simple et plus fiable.</p>
+      <div class="grid-3">
+        <article class="card green">
+          <span class="tag">Produit</span>
+          <h3>Un outil de journée</h3>
+          <p>WhatsApp pour parler, l’app pour la commande, le paiement et la course. Même quand le réseau coupe.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Modèle</span>
+          <h3>Deux temps</h3>
+          <p>Un abonnement de 3&nbsp;000&nbsp;F&nbsp;CFA par mois — coûts absorbés, rémunérations fondateurs (≈&nbsp;16&nbsp;400&nbsp;USD / mois), ingénieur recruté quand l’infra et le revenu le justifient — et un partage, une fois la valeur prouvée.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Terrain</span>
+          <h3>Ville par ville</h3>
+          <p>Ziguinchor et Dakar d’abord, puis Thiès, Kaolack, Mbour et Saly — toujours avec un relais local.</p>
+        </article>
+      </div>
+    </section>
+
+    </div>
+
+    <div class="deck-nav">
+      <button type="button" class="nav-btn" id="btn-prev">Précédent</button>
+      <p id="slide-status" aria-live="polite"></p>
+      <div class="dots" id="dots"></div>
+      <button type="button" class="nav-btn" id="btn-next">Suivant</button>
+    </div>
+    <p class="hint">Flèches du clavier · glisser sur mobile.</p>
+  </section>
+</div>
+<script>
+(function () {
+  "use strict";
+  var slides = [], titles = [], current = 0;
+  function renderSlides() {
+    slides.forEach(function (s, i) { s.hidden = i !== current; });
+    document.getElementById("btn-prev").disabled = current === 0;
+    var next = document.getElementById("btn-next");
+    next.disabled = current === slides.length - 1;
+    next.textContent = "Suivant";
+    document.getElementById("slide-status").textContent = "Diapositive " + (current + 1) + " sur " + slides.length + " — " + titles[current];
+    document.querySelectorAll("#dots .dot").forEach(function (d, i) { d.classList.toggle("on", i === current); });
+  }
+  function goSlide(delta) {
+    var n = current + delta;
+    if (n < 0 || n >= slides.length) return;
+    current = n;
+    renderSlides();
+  }
+  function rebuildDots() {
+    document.getElementById("dots").innerHTML = titles.map(function (t, i) {
+      return '<button type="button" class="dot" data-slide="' + i + '" aria-label="' + t + '" title="' + t + '"></button>';
+    }).join("");
+  }
+  function init() {
+    slides = Array.prototype.slice.call(document.querySelectorAll("#deck-associe .slide"));
+    titles = slides.map(function (s) { return s.getAttribute("data-title"); });
+    document.getElementById("btn-prev").addEventListener("click", function () { goSlide(-1); });
+    document.getElementById("btn-next").addEventListener("click", function () { goSlide(1); });
+    document.getElementById("dots").addEventListener("click", function (e) {
+      var b = e.target.closest("[data-slide]");
+      if (!b) return;
+      current = Number(b.getAttribute("data-slide"));
+      renderSlides();
+    });
+    var touchX = null;
+    var pres = document.getElementById("view-pres");
+    pres.addEventListener("touchstart", function (e) { touchX = e.changedTouches[0].clientX; }, { passive: true });
+    pres.addEventListener("touchend", function (e) {
+      if (touchX === null || e.target.closest("pre")) { touchX = null; return; }
+      var dx = e.changedTouches[0].clientX - touchX;
+      if (dx < -50) goSlide(1); else if (dx > 50) goSlide(-1);
+      touchX = null;
+    }, { passive: true });
+    document.addEventListener("keydown", function (e) {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === "PageDown") { e.preventDefault(); goSlide(1); }
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp" || e.key === "PageUp") { e.preventDefault(); goSlide(-1); }
+      else if (e.key === "Home") { e.preventDefault(); current = 0; renderSlides(); }
+      else if (e.key === "End") { e.preventDefault(); current = slides.length - 1; renderSlides(); }
+    });
+    rebuildDots();
+    renderSlides();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+</script>
+</body>
+</html>
